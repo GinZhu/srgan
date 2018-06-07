@@ -2,6 +2,7 @@
 # -*- coding: utf8 -*-
 
 import os, time, pickle, random, time
+os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 from datetime import datetime
 import numpy as np
 from time import localtime, strftime
@@ -30,11 +31,11 @@ ni = int(np.sqrt(batch_size))
 
 def train():
     ## create folders to save result images and trained model
-    save_dir_ginit = "samples/{}_ginit".format(tl.global_flag['mode'])
-    save_dir_gan = "samples/{}_gan".format(tl.global_flag['mode'])
+    save_dir_ginit = "/local/scratch/jz426/superResolution/results/{}_ginit".format(tl.global_flag['mode'])
+    save_dir_gan = "/local/scratch/jz426/superResolution/results/{}_gan".format(tl.global_flag['mode'])
     tl.files.exists_or_mkdir(save_dir_ginit)
     tl.files.exists_or_mkdir(save_dir_gan)
-    checkpoint_dir = "checkpoint"  # checkpoint_resize_conv
+    checkpoint_dir = "/local/scratch/jz426/superResolution/results/checkpoint"  # checkpoint_resize_conv
     tl.files.exists_or_mkdir(checkpoint_dir)
 
     ###====================== PRE-LOAD DATA ===========================###
@@ -111,7 +112,7 @@ def train():
     tl.files.load_and_assign_npz(sess=sess, name=checkpoint_dir + '/d_{}.npz'.format(tl.global_flag['mode']), network=net_d)
 
     ###============================= LOAD VGG ===============================###
-    vgg19_npy_path = "vgg19.npy"
+    vgg19_npy_path = "/local/scratch/jz426/superResolution/SuperResolution/Data/vgg19.npy"
     if not os.path.isfile(vgg19_npy_path):
         print("Please download vgg19.npz from : https://github.com/machrisaa/tensorflow-vgg")
         exit()

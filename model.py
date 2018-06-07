@@ -4,6 +4,7 @@
 import tensorflow as tf
 import tensorlayer as tl
 from tensorlayer.layers import *
+import time
 
 # from tensorflow.python.ops import variable_scope as vs
 # from tensorflow.python.ops import math_ops, init_ops, array_ops, nn
