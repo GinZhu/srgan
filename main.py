@@ -91,7 +91,10 @@ def train():
     mse_loss = tl.cost.mean_squared_error(net_g.outputs, t_target_image, is_mean=True)
     vgg_loss = 2e-6 * tl.cost.mean_squared_error(vgg_predict_emb.outputs, vgg_target_emb.outputs, is_mean=True)
 
-    g_loss = mse_loss + vgg_loss + g_gan_loss
+    # total variation
+    total_variation_loss = 2e-8 * tf.reduce_sum(tf.image.total_variation(net_g.outputs))
+    g_loss = mse_loss + vgg_loss + g_gan_loss + total_variation_loss
+    # g_loss = mse_loss + vgg_loss + g_gan_loss
 
     g_vars = tl.layers.get_variables_with_name('SRGAN_g', True, True)
     d_vars = tl.layers.get_variables_with_name('SRGAN_d', True, True)
