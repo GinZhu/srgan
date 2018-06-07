@@ -2,7 +2,7 @@
 # -*- coding: utf8 -*-
 
 import os, time, pickle, random, time
-os.environ["CUDA_VISIBLE_DEVICES"] = '4'
+os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 from datetime import datetime
 import numpy as np
 from time import localtime, strftime
