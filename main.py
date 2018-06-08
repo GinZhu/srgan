@@ -2,7 +2,7 @@
 # -*- coding: utf8 -*-
 
 import os, time, pickle, random, time
-os.environ["CUDA_VISIBLE_DEVICES"] = '0'
+os.environ["CUDA_VISIBLE_DEVICES"] = '3'
 from datetime import datetime
 import numpy as np
 from time import localtime, strftime
@@ -31,11 +31,11 @@ ni = int(np.sqrt(batch_size))
 
 def train():
     ## create folders to save result images and trained model
-    save_dir_ginit = "/local/scratch/jz426/superResolution/results/{}_ginit".format(tl.global_flag['mode'])
-    save_dir_gan = "/local/scratch/jz426/superResolution/results/{}_gan".format(tl.global_flag['mode'])
+    save_dir_ginit = "/local/scratch/jz426/superResolution/results1/{}_ginit".format(tl.global_flag['mode'])
+    save_dir_gan = "/local/scratch/jz426/superResolution/results1/{}_gan".format(tl.global_flag['mode'])
     tl.files.exists_or_mkdir(save_dir_ginit)
     tl.files.exists_or_mkdir(save_dir_gan)
-    checkpoint_dir = "/local/scratch/jz426/superResolution/results/checkpoint"  # checkpoint_resize_conv
+    checkpoint_dir = "/local/scratch/jz426/superResolution/results1/checkpoint"  # checkpoint_resize_conv
     tl.files.exists_or_mkdir(checkpoint_dir)
 
     ###====================== PRE-LOAD DATA ===========================###
@@ -92,9 +92,9 @@ def train():
     vgg_loss = 2e-6 * tl.cost.mean_squared_error(vgg_predict_emb.outputs, vgg_target_emb.outputs, is_mean=True)
 
     # total variation
-    total_variation_loss = 2e-8 * tf.reduce_sum(tf.image.total_variation(net_g.outputs))
-    g_loss = mse_loss + vgg_loss + g_gan_loss + total_variation_loss
-    # g_loss = mse_loss + vgg_loss + g_gan_loss
+    # total_variation_loss = 2e-8 * tf.reduce_sum(tf.image.total_variation(net_g.outputs))
+    # g_loss = mse_loss + vgg_loss + g_gan_loss + total_variation_loss
+    g_loss = mse_loss + vgg_loss + g_gan_loss
 
     g_vars = tl.layers.get_variables_with_name('SRGAN_g', True, True)
     d_vars = tl.layers.get_variables_with_name('SRGAN_d', True, True)
